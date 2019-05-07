@@ -5,7 +5,7 @@
    | Copyright (c) 1998-2014 Zend Technologies Ltd. (http://www.zend.com) |
    +----------------------------------------------------------------------+
    | This source file is subject to version 2.00 of the Zend license,     |
-   | that is bundled with this package in the file LICENSE, and is        | 
+   | that is bundled with this package in the file LICENSE, and is        |
    | available through the world-wide-web at the following url:           |
    | http://www.zend.com/license/2_00.txt.                                |
    | If you did not receive a copy of the Zend license and are unable to  |
@@ -20,6 +20,8 @@
 
 #include "zend.h"
 #include "zend_ts_hash.h"
+
+
 
 /* ts management functions */
 static void begin_read(TsHashTable *ht)
@@ -91,6 +93,8 @@ ZEND_API void zend_ts_hash_destroy(TsHashTable *ht)
 #endif
 }
 
+
+
 ZEND_API void zend_ts_hash_clean(TsHashTable *ht)
 {
 	ht->reader = 0;
@@ -150,8 +154,13 @@ ZEND_API void zend_ts_hash_graceful_destroy(TsHashTable *ht)
 	end_write(ht);
 
 #ifdef ZTS
+	/* Previously
 	tsrm_mutex_free(ht->mx_reader);
 	tsrm_mutex_free(ht->mx_reader);
+	*/
+	pointer_tsrm_mutex_free(&(ht->mx_reader));
+	//ht->mx_reader is now null here
+	pointer_tsrm_mutex_free(&(ht->mx_reader));
 #endif
 }
 
@@ -263,6 +272,8 @@ ZEND_API int zend_ts_hash_index_exists(TsHashTable *ht, ulong h)
 
 	return retval;
 }
+
+
 
 ZEND_API void zend_ts_hash_copy(TsHashTable *target, TsHashTable *source, copy_ctor_func_t pCopyConstructor, void *tmp, uint size)
 {

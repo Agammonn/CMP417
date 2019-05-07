@@ -56,7 +56,7 @@ typedef unsigned long tsrm_uintptr_t;
 #elif defined(TSRM_ST)
 # include <st.h>
 #elif defined(BETHREADS)
-#include <kernel/OS.h> 
+#include <kernel/OS.h>
 #include <TLS.h>
 #endif
 
@@ -87,7 +87,7 @@ typedef struct {
   sem_id sem;
   int32 ben;
 } beos_ben;
-# define MUTEX_T beos_ben * 
+# define MUTEX_T beos_ben *
 #endif
 
 #ifdef HAVE_SIGNAL_H
@@ -140,6 +140,8 @@ TSRM_API void tsrm_error_set(int level, char *debug_filename);
 TSRM_API THREAD_T tsrm_thread_id(void);
 TSRM_API MUTEX_T tsrm_mutex_alloc(void);
 TSRM_API void tsrm_mutex_free(MUTEX_T mutexp);
+/*declaration of the new function */
+TSRM_API void pointer_tsrm_mutex_free(MUTEX_T* mutexp);
 TSRM_API int tsrm_mutex_lock(MUTEX_T mutexp);
 TSRM_API int tsrm_mutex_unlock(MUTEX_T mutexp);
 #ifdef HAVE_SIGPROCMASK
